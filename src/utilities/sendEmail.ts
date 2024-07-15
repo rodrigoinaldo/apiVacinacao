@@ -3,13 +3,13 @@ import nodemailer from 'nodemailer';
 export const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'lagado75@gmail.com', 
-    pass: 'inaldo123'         
+    user: 'exemplo5@gmail.com', 
+    pass: 'exemplo123$fgh'         
   }
 });
 
 export const mailOptions = {
-  from: 'lagado75@gmail.com', 
+  from: 'exemplo5@gmail.com', 
   to: '', 
   subject: 'Test Email from Nodemailer in TypeScript',
   text: 'Hello from Nodemailer!'
