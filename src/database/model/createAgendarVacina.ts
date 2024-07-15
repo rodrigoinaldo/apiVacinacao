@@ -4,6 +4,7 @@ import agentesaude from './createAgente';
 import vacinas from './createVacina';
 import Idoso from './createUser';
 
+
 const AgendarVacina = database.define('agendarVacina', {
   id_idoso: {
     type: DataTypes.INTEGER,
@@ -23,9 +24,8 @@ const AgendarVacina = database.define('agendarVacina', {
   },
   id_agente: {
     type: DataTypes.INTEGER,
-    allowNull: false,
     references: {
-      model: agentesaude, 
+      model: agentesaude,
       key: 'id',
     },
   },
@@ -35,6 +35,8 @@ const AgendarVacina = database.define('agendarVacina', {
   },
 });
 
-AgendarVacina.belongsTo(agentesaude, { foreignKey: 'id_agente', as: 'agentesaudes' });
+AgendarVacina.belongsTo(agentesaude, { foreignKey: 'id_agente' }); 
+AgendarVacina.belongsTo(Idoso, { foreignKey: 'id_idoso' }); 
+AgendarVacina.belongsTo(vacinas, { foreignKey: 'id_vacina' }); 
 
 export default AgendarVacina;

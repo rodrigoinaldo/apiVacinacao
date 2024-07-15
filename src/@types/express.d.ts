@@ -6,7 +6,7 @@ declare global {
   namespace Express {
     export interface  Request{
       userId: Idoso,
-      idAgente: Int 
+      idAgente: Int,
     }
   }
 }

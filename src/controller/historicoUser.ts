@@ -1,14 +1,14 @@
 import database from "../database/database";
-import Historico from "../database/model/createHistorico";
 import { Request, Response, NextFunction } from 'express';
 import AgendarVacina from "../database/model/createAgendarVacina";
 import Vacina from "../database/model/createVacina";
 import Idoso from "../database/model/createUser";
 import Agentesaude from "../database/model/createAgente"; // Importar modelo
+import agentesaude from "../database/model/createAgente";
 
 database.authenticate()
     .then(() => {
-        console.log("Conexão feita com sucesso agendamentos");
+        console.log("connection make successful");
     })
     .catch((msgErr) => {
         console.log(msgErr);
@@ -16,37 +16,25 @@ database.authenticate()
 
 export class HistoricoUser {
     async historicoPaciente(req: Request, res: Response, next: NextFunction): Promise<void> {
-        if (!req.userId) {
-            res.status(401).send("Você não está logado");
-            return;
-        }
+        const id = req.params.id;
 
         try {
-            const historicoExistente = await Historico.findAll({
-                where: { id_idoso: req.userId },
-                include: [
+            const historicoExistente = await AgendarVacina.findAll({
+                where: { id: id }, // Condição para encontrar o registro específico
+                include:[ 
                     {
-                        model: AgendarVacina,
-                        as: 'agendarVacina',
-                        include: [
-                            {
-                                model: Agentesaude,
-                                as: 'agentesaudes', // Usando o alias definido na associação
-                                attributes: ['nome']
-                            }
-                        ]
-                    },
-                    {
-                        model: Idoso,
-                        as: 'idoso',
-                        attributes: ['nomeCompleto']
-                    },
-                    {
-                        model: Vacina,
-                        as: 'vacina',
-                        attributes: ['nome']
-                    }
-                ]
+                    model: Agentesaude, // Modelo a ser incluído
+                    attributes: ['agente'] // Atributos específicos a serem incluídos, se necessário
+                },
+                {
+                    model: Idoso, 
+                    attributes: ['nomeCompleto'] 
+                },
+                {
+                    model:Vacina,
+                    attributes:['nome']
+                }
+            ]
             });
 
             if (!historicoExistente) {

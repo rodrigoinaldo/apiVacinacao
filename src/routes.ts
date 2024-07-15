@@ -19,6 +19,6 @@ routes.post('/loginIdoso', new Login().loginIdoso)
 
 routes.get('/pegarVacinas',authMiddleware, new createObject().AllVaccine)
 routes.post('/agendarVacina', authMiddleware, new agendamentos().agendarVacinaPaciente)
-routes.get('/historico', authMiddleware, new HistoricoUser().historicoPaciente)
+routes.get('/historico/:id', authMiddleware, new HistoricoUser().historicoPaciente)
 
 export default routes

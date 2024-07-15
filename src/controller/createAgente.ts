@@ -37,7 +37,7 @@ export class createAgente{
                 senha: hastPassword
             })
 
-            res.status(201).json("vacina Crada com sucesso ")
+            res.status(201).json("agente Crada com sucesso ")
 
         }catch(error){
             console.error("erro ao criar uma agente: " + error);
